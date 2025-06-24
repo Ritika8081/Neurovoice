@@ -1,8 +1,9 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 const MainPage = () => {
+  const [isExpanded, setIsExpanded] = useState(false)
   const username = 'Ritika'
   const appName = 'Neurovoice'
   const version = 'v1.0.0'
@@ -44,6 +45,8 @@ const MainPage = () => {
           <div
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition overflow-hidden cursor-pointer flex flex-col"
+            onMouseEnter={() => setIsExpanded(true)}
+            onMouseLeave={() => setIsExpanded(false)}
           >
             <Image src={card.img} alt={card.title} width={300} height={200} className="w-full h-32 sm:h-24 object-cover" />
             <div className="p-2 text-center text-sm font-medium">{card.title}</div>
