@@ -18,11 +18,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="relative min-h-screen  dark:bg-gray-900 transition-colors duration-300">
       {/* Desktop Sidebar */}
       {isDesktop ? (
         <div className="fixed top-0 left-0 h-screen z-20">
-          <Sidebar onToggleSymmetricMargin={() => setSymmetricMargin(prev => !prev)} />
+          <Sidebar
+            symmetricMargin={symmetricMargin}
+            setSymmetricMargin={setSymmetricMargin}
+            onToggleSymmetricMargin={() => setSymmetricMargin(prev => !prev)}
+          />
         </div>
       ) : (
         showMobileSidebar && (
@@ -34,7 +38,11 @@ export default function Home() {
               >
                 ✕
               </button>
-              <Sidebar forceExpanded />
+              <Sidebar
+                symmetricMargin={symmetricMargin}
+                setSymmetricMargin={setSymmetricMargin}
+                onToggleSymmetricMargin={() => setSymmetricMargin(prev => !prev)}
+              />
             </div>
             <div
               className="flex-1  bg-opacity-50 backdrop-blur-sm"
@@ -54,7 +62,7 @@ export default function Home() {
             <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-emerald-400 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
           </div>
