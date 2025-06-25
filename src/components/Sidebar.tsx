@@ -7,7 +7,13 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 
-const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
+const Sidebar = ({
+  forceExpanded = false,
+  onToggleSymmetricMargin
+}: {
+  forceExpanded?: boolean,
+  onToggleSymmetricMargin?: () => void
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
 
@@ -36,19 +42,31 @@ const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-emerald-400 rounded-lg flex items-center justify-center flex-shrink-0">
           <Zap className="w-4 h-4 text-white" />
         </div>
-        <span
-          className={clsx(
-            'text-lg font-bold tracking-wide transition-all duration-300 origin-left',
-            expanded ? 'opacity-100 ml-2 scale-x-100' : 'opacity-0 ml-0 scale-x-0',
-            'whitespace-nowrap'
-          )}
-          style={{
-            width: expanded ? 'auto' : 0,
-            display: expanded ? 'inline' : 'inline-block'
-          }}
-        >
+        <span className={clsx(
+          'text-lg font-bold tracking-wide transition-all duration-300 origin-left',
+          expanded ? 'opacity-100 ml-2 scale-x-100' : 'opacity-0 ml-0 scale-x-0',
+          'whitespace-nowrap'
+        )}>
           Neurovoice
         </span>
+        {expanded && onToggleSymmetricMargin && (
+          <button
+            onClick={onToggleSymmetricMargin}
+            className="ml-auto p-1 rounded hover:bg-blue-50 dark:hover:bg-gray-800 transition"
+            title="Toggle Margin"
+            type="button"
+          >
+            <svg width="1.4rem" height="1.4rem" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M9.37484 3.95834H4.7915C3.41079 3.95834 2.2915 5.07763 2.2915 6.45834V13.5417C2.2915 14.9224 3.41079 16.0417 4.7915 16.0417H9.37484M9.37484 3.95834H15.2082C16.5889 3.95834 17.7082 5.07763 17.7082 6.45834V13.5417C17.7082 14.9224 16.5889 16.0417 15.2082 16.0417H9.37484M9.37484 3.95834V16.0417"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Navigation Sections */}
@@ -85,8 +103,8 @@ const SidebarItem = ({
 }: { icon: React.ReactNode, label: string, isExpanded: boolean, active?: boolean }) => (
   <div className={clsx(
     'flex items-center min-h-[42px] px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer group',
-    active 
-      ? 'bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-300' 
+    active
+      ? 'bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-300'
       : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300',
     'gap-3'
   )}>

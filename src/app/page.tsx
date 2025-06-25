@@ -8,6 +8,7 @@ import { clsx } from 'clsx';
 export default function Home() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
+  const [symmetricMargin, setSymmetricMargin] = useState(false);
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 1024);
@@ -21,7 +22,7 @@ export default function Home() {
       {/* Desktop Sidebar */}
       {isDesktop ? (
         <div className="fixed top-0 left-0 h-screen z-20">
-          <Sidebar />
+          <Sidebar onToggleSymmetricMargin={() => setSymmetricMargin(prev => !prev)} />
         </div>
       ) : (
         showMobileSidebar && (
@@ -64,9 +65,8 @@ export default function Home() {
       <main>
         <div
           className={clsx(
-            // Add left margin only on desktop to match sidebar width
-            isDesktop ? 'mx-34 mt-16' : 'mt-20',
-            'w-full max-w-5xl px-2 sm:px-3 mx-auto transition-all duration-300'
+            isDesktop ? (symmetricMargin ? 'ml-88 mr-16' : 'ml-64 mr-4') : 'mt-20',
+            'mt-16 w-full max-w-5xl px-2 sm:px-3 transition-all duration-300'
           )}
         >
           <MainPage />
