@@ -1,3 +1,4 @@
+// Updated Sidebar.tsx
 'use client';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,7 +12,7 @@ const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    const check = () => setIsDesktop(window.innerWidth >= 1020);
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
@@ -25,13 +26,16 @@ const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
       onMouseLeave={() => !forceExpanded && isDesktop && setIsExpanded(false)}
       className={clsx(
         'h-screen border-r transition-all duration-300 flex flex-col justify-between',
-        'bg-white text-gray-900 border-gray-200 dark:bg-gray-900 dark:text-white dark:border-gray-700',
+        'bg-white text-gray-900 border-gray-200',
+        'dark:bg-gray-900 dark:text-white dark:border-gray-700',
         expanded ? 'w-64' : 'w-16'
       )}
     >
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-4 border-b border-gray-200 dark:border-gray-700">
-        <Zap className="w-6 h-6 text-yellow-500 flex-shrink-0" />
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-emerald-400 rounded-lg flex items-center justify-center flex-shrink-0">
+          <Zap className="w-4 h-4 text-white" />
+        </div>
         <span
           className={clsx(
             'text-lg font-bold tracking-wide transition-all duration-300 origin-left',
@@ -47,30 +51,27 @@ const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
         </span>
       </div>
 
-      {/* Scrollable Section */}
+      {/* Navigation Sections */}
       <div className="flex-1 overflow-y-auto px-2 py-4 space-y-6">
-        <div className="space-y-2">
-          <SidebarItem icon={<Home className="w-5 h-5" />} label="Home" isExpanded={expanded} />
-          <SidebarItem icon={<Mic className="w-5 h-5" />} label="Voices" isExpanded={expanded} />
+        {/* Main Navigation */}
+        <div className="space-y-1">
+          <SidebarSectionTitle isExpanded={expanded}>Main</SidebarSectionTitle>
+          <SidebarItem icon={<Home className="w-5 h-5" />} label="Dashboard" isExpanded={expanded} active />
+          <SidebarItem icon={<Mic className="w-5 h-5" />} label="Voice Library" isExpanded={expanded} />
         </div>
-        <div>
-          <SidebarSectionTitle isExpanded={expanded}>Playground</SidebarSectionTitle>
-          <div className="space-y-2">
-            <SidebarItem icon={<MessageSquare className="w-5 h-5" />} label="Text to Speech" isExpanded={expanded} />
-            <SidebarItem icon={<Music2 className="w-5 h-5" />} label="Voice Changer" isExpanded={expanded} />
-          </div>
-        </div>
-        <div>
-          <SidebarSectionTitle isExpanded={expanded}>Products</SidebarSectionTitle>
-          <div className="space-y-2">
-            <SidebarItem icon={<Rocket className="w-5 h-5" />} label="Studio" isExpanded={expanded} />
-            <SidebarItem icon={<Settings className="w-5 h-5" />} label="Dubbing" isExpanded={expanded} />
-          </div>
+
+        {/* Tools */}
+        <div className="space-y-1">
+          <SidebarSectionTitle isExpanded={expanded}>Tools</SidebarSectionTitle>
+          <SidebarItem icon={<MessageSquare className="w-5 h-5" />} label="Text to Speech" isExpanded={expanded} />
+          <SidebarItem icon={<Music2 className="w-5 h-5" />} label="Voice Changer" isExpanded={expanded} />
+          <SidebarItem icon={<Rocket className="w-5 h-5" />} label="Voice Studio" isExpanded={expanded} />
+          <SidebarItem icon={<Settings className="w-5 h-5" />} label="Dubbing Tool" isExpanded={expanded} />
         </div>
       </div>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 px-2 py-3 space-y-2">
+      <div className="border-t border-gray-200 dark:border-gray-700 px-2 py-3 space-y-1">
         <SidebarItem icon={<Wrench className="w-5 h-5" />} label="Audio Tools" isExpanded={expanded} />
         <SidebarItem icon={<Bell className="w-5 h-5" />} label="Notifications" isExpanded={expanded} />
         <SidebarItem icon={<User className="w-5 h-5" />} label="Profile" isExpanded={expanded} />
@@ -80,17 +81,20 @@ const Sidebar = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
 };
 
 const SidebarItem = ({
-  icon, label, isExpanded
-}: { icon: React.ReactNode, label: string, isExpanded: boolean }) => (
+  icon, label, isExpanded, active = false
+}: { icon: React.ReactNode, label: string, isExpanded: boolean, active?: boolean }) => (
   <div className={clsx(
-    'flex items-center min-h-[40px] px-3 py-2 rounded-md transition-all duration-200 cursor-pointer',
-    'hover:bg-gray-100 dark:hover:bg-gray-800 gap-3'
+    'flex items-center min-h-[42px] px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer group',
+    active 
+      ? 'bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-300' 
+      : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300',
+    'gap-3'
   )}>
     <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center leading-none">
       {icon}
     </span>
     <span className={clsx(
-      'text-sm whitespace-nowrap transition-all duration-300 origin-left leading-none',
+      'text-sm font-medium whitespace-nowrap transition-all duration-300 origin-left leading-none',
       isExpanded ? 'opacity-100 ml-2 scale-x-100 w-auto' : 'opacity-0 ml-0 scale-x-0 w-0'
     )}
       style={{ overflow: 'hidden', display: 'inline-block' }}>
@@ -101,7 +105,9 @@ const SidebarItem = ({
 
 const SidebarSectionTitle = ({ isExpanded, children }: { isExpanded: boolean, children: React.ReactNode }) =>
   isExpanded ? (
-    <h3 className="text-sm text-gray-500 dark:text-gray-400 px-2 mb-2 uppercase">{children}</h3>
-  ) : <div className="h-6 mb-2" />;
+    <h3 className="text-xs text-gray-500 dark:text-gray-400 px-3 mb-2 uppercase tracking-wider font-semibold">
+      {children}
+    </h3>
+  ) : <div className="h-4 mb-2" />;
 
 export default Sidebar;

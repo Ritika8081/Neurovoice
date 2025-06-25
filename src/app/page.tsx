@@ -1,22 +1,23 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
-import MainPage from '@/components/Mainpage';
+import MainPage from '../components/Mainpage';
 import { Menu, User } from 'lucide-react';
+import { clsx } from 'clsx';
 
 export default function Home() {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768);
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gray-50 dark:bg-black">
+    <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Desktop Sidebar */}
       {isDesktop ? (
         <div className="fixed top-0 left-0 h-screen z-20">
@@ -25,18 +26,17 @@ export default function Home() {
       ) : (
         showMobileSidebar && (
           <div className="fixed inset-0 z-40 flex">
-            <div className="w-64 bg-white dark:bg-gray-900 h-full overflow-y-auto relative">
+            <div className="w-64 bg-white dark:bg-gray-900 h-full overflow-y-auto relative shadow-xl">
               <button
                 onClick={() => setShowMobileSidebar(false)}
-                className="absolute top-4 right-4 text-gray-700 dark:text-gray-300"
+                className="absolute top-4 right-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white z-50"
               >
                 ✕
               </button>
-              {/* 👇 only pass forceExpanded for mobile */}
               <Sidebar forceExpanded />
             </div>
             <div
-              className="flex-1  bg-opacity-30 backdrop-blur-sm"
+              className="flex-1  bg-opacity-50 backdrop-blur-sm"
               onClick={() => setShowMobileSidebar(false)}
             />
           </div>
@@ -45,17 +45,30 @@ export default function Home() {
 
       {/* Mobile Topbar */}
       {!isDesktop && (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-30">
-          <button onClick={() => setShowMobileSidebar(true)}>
-            <Menu className="w-6 h-6" />
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-30 transition-colors duration-300">
+          <button
+            onClick={() => setShowMobileSidebar(true)}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
           </button>
-          <User className="w-6 h-6" />
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-emerald-400 rounded-lg flex items-center justify-center">
+              <User className="w-4 h-4 text-white" />
+            </div>
+          </div>
         </div>
       )}
 
       {/* Main Content */}
-      <main className={isDesktop ? 'md:mx-64' : ''}>
-        <div className="w-full max-w-6xl px-1 sm:px-2 mx-auto pt-4">
+      <main>
+        <div
+          className={clsx(
+            // Add left margin only on desktop to match sidebar width
+            isDesktop ? 'mx-34 mt-16' : 'mt-20',
+            'w-full max-w-5xl px-2 sm:px-3 mx-auto transition-all duration-300'
+          )}
+        >
           <MainPage />
         </div>
       </main>
