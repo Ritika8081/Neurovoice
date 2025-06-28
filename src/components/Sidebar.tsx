@@ -102,7 +102,7 @@ const Sidebar = ({
               active
             />
           </Link>
-          <SidebarItem icon={<Mic className="w-5 h-5" />} label="Voice Library" isExpanded={expanded} />
+          <SidebarItem icon={<Mic className="w-5 h-5" />} label="Chords Docs" isExpanded={expanded} />
         </div>
 
         {/* Tools */}
@@ -110,14 +110,31 @@ const Sidebar = ({
           <SidebarSectionTitle isExpanded={expanded}>Tools</SidebarSectionTitle>
           <Link href="/texttospeech" className="block">
             <SidebarItem
-              icon={<MessageSquare className="w-5 h-5" />}
-              label="Text to Speech"
+              icon={<Music2 className="w-5 h-5" />} // Music2 for Chords Visualizer
+              label="Chords Visualizer"
               isExpanded={expanded}
             />
           </Link>
-          <SidebarItem icon={<Music2 className="w-5 h-5" />} label="Voice Changer" isExpanded={expanded} />
-          <SidebarItem icon={<Rocket className="w-5 h-5" />} label="Voice Studio" isExpanded={expanded} />
-          <SidebarItem icon={<Settings className="w-5 h-5" />} label="Dubbing Tool" isExpanded={expanded} />
+          <SidebarItem
+            icon={<Settings className="w-5 h-5" />} // Settings for Serial wizard
+            label="Serial wizard"
+            isExpanded={expanded}
+          />
+          <SidebarItem
+            icon={<Zap className="w-5 h-5" />} // Zap for FFT Visualizer
+            label="FFT Visualizer"
+            isExpanded={expanded}
+          />
+          <SidebarItem
+            icon={<Rocket className="w-5 h-5" />} // Rocket for NPG Lite
+            label="NPG Lite"
+            isExpanded={expanded}
+          />
+          <SidebarItem
+            icon={<Wrench className="w-5 h-5" />} // Wrench for Rep-Forge
+            label="Rep-Forge"
+            isExpanded={expanded}
+          />
         </div>
       </div>
 
