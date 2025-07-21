@@ -68,7 +68,7 @@ export default function Home() {
   const getMainContentPadding = () => {
     if (isMobile) return 'px-2 sm:px-3';
     if (isTablet) return 'px-4';
-    return 'px-4 lg:px-6';
+    return 'px-5 lg:px-8';
   };
 
   return (
@@ -91,7 +91,7 @@ export default function Home() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 transition-opacity duration-300"
+            className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-40 transition-opacity duration-300"
             onClick={() => setShowMobileSidebar(false)}
           />
 
@@ -114,6 +114,7 @@ export default function Home() {
 
               <div className="pb-4">
                 <Sidebar
+                  forceExpanded={true}
                   symmetricMargin={symmetricMargin}
                   setSymmetricMargin={setSymmetricMargin}
                   onToggleSymmetricMargin={() => setSymmetricMargin(prev => !prev)}
@@ -137,23 +138,7 @@ export default function Home() {
               <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300" />
             </button>
 
-            {/* App Title (visible on larger mobile screens) */}
-            <div className="hidden sm:flex items-center gap-2">
-              <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">N</span>
-              </div>
-              <span className="font-semibold text-gray-900 dark:text-white">Neurovoice</span>
-            </div>
-
-            {/* User Avatar */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-cyan-500 rounded-lg flex items-center justify-center">
-                <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </div>
-              <span className="hidden sm:inline-block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Ritika
-              </span>
-            </div>
+          
           </div>
         </div>
       )}

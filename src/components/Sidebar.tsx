@@ -115,11 +115,13 @@ const Sidebar = ({
               isExpanded={expanded}
             />
           </Link>
+          <Link href="/serialwizard" className="block">
           <SidebarItem
             icon={<Settings className="w-5 h-5" />} // Settings for Serial wizard
             label="Serial wizard"
             isExpanded={expanded}
           />
+          </Link>
           <SidebarItem
             icon={<Zap className="w-5 h-5" />} // Zap for FFT Visualizer
             label="FFT Visualizer"
